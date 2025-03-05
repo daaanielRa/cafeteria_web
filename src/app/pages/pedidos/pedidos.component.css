@@ -1,0 +1,26 @@
+.boton {
+    position: fixed;
+    top: 5px;
+    left: 5px;
+    padding: 10px 20px;
+    background-color: #6d4c41;
+    color: white;
+    border: none;
+    width: 90px;
+    font-size: 13px;
+    font-family: Poppins, sans-serif;
+  }
+
+.pedidocontainer {
+  justify-content: center;
+  background: #fff;
+  padding: 25px;
+  border-radius: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 100%;
+  max-width: 380px;
+  border: 2px solid #5d4037; 
+}
+
+

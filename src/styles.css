@@ -47,7 +47,7 @@ body {
 
 }
 
-/* Logo o título */
+
 h2 {
     font-size: 26px;
     font-weight: bold;
@@ -60,7 +60,6 @@ p {
     font-size: 14px;
 }
 
-/* Estilo de los campos */
 .input-group {
     margin: 15px 0px;
     padding-right: 15px;
@@ -135,3 +134,5 @@ button:hover {
         width: 90%;
     }
 }
+
+

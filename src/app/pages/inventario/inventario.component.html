@@ -1,0 +1,25 @@
+
+  <title>Gestión de Productos</title>
+
+  <h2>Gestión de Productos</h2>
+  <form>
+    <label for="producto">Producto:</label>
+    <input type="text" id="producto" name="Nombre del producto" required />
+    <br /><br />
+
+    <label for="cantidad">Cantidad:</label>
+    <input type="number" id="cantidad" min="1" required />
+    <br /><br />
+
+    <label for="precio">Precio:</label>
+    <input type="number" id="precio" name="precio" min="50" required />
+    <br /><br />
+    <div class="containerbuttom">
+      <button type="submit" name="accion" value="agregar">Agregar</button>
+      <button type="submit" name="accion" value="modificar">Modificar</button>
+      <button type="submit" name="accion" value="eliminar">Eliminar</button>
+    </div>
+  </form>
+
+  <button class="boton" onclick="history.back()">Atrás</button>
+

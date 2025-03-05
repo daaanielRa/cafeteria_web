@@ -1,0 +1,42 @@
+
+  <h2>Gestión de Empleados</h2>
+  <form>
+    <label for="Nombre">Nombre:</label>
+    <input type="text" id="Nombre" placeholder="Nombre" required />
+    <br /><br />
+
+    <label for="correo">Correo Electrónico:</label>
+    <input type="email" id="correo" placeholder="Correo Electrónico" required />
+    <br /><br />
+
+    <label for="cargo">Cargo:</label>
+    <input type="text" id="cargo" placeholder="Cargo" required />
+    <br /><br />
+
+    <label for="horario">Horario:</label>
+    <input type="time" id="horario" required />
+    <br /><br />
+
+    <label for="clave">Clave:</label>
+    <input type="password" id="clave" placeholder="Clave" required />
+    <br /><br />
+
+    <label for="usuario">Tipo de usuario:</label>
+    <select id="usuario" name="usuario" required>  
+    <option value="" selected disabled></option>
+    <option value="empleado">Empleado</option>
+    <option value="administrador">Administrador</option>
+    </select>
+    <br /><br />
+
+    
+    <div class="containerbuttom">
+      <button type="submit" name="accion" value="agregar">Agregar</button>
+      <button type="submit" name="accion" value="modificar">Modificar</button>
+      <button type="submit" name="accion" value="eliminar">Eliminar</button>
+    </div>
+  </form>
+
+  <button class="boton" onclick="history.back()">Atrás</button>
+
+

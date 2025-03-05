@@ -1,81 +1,58 @@
-
-body {
-    font-family: 'Poppins', sans-serif;
+/* Estilos para el menú */
+body, html {
     margin: 0;
     padding: 0;
-    background-color: #f4f4f9;
+    box-sizing: border-box;
 }
 
-.container {
-    width: 100%;
-    padding: 20px;
-}
-
-header {
+nav {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #8d6e63;
-    color: #fff;
-    padding: 15px 30px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-header span {
-    font-size: 24px;
-    font-weight: bold;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-}
-
-menu {
-    list-style-type: none;
-    display: flex;
-    gap: 30px;
-}
-
-menu li {
-    display: inline-block;
-}
-
-menu a {
-    text-decoration: none;
-    color: #fff;
-    font-size: 16px;
-    font-weight: 500;
-    transition: color 0.3s ease, transform 0.2s ease;
-}
-
-menu a:hover {
-    color: white;
-    transform: translateY(-2px); 
-}
-
-header {
-    font-family: 'Poppins', sans-serif;
-    position: absolute;
+    justify-content: center;
+    background-color: #fff; /* Fondo blanco */
+    position: fixed;
     top: 0;
-    right: 0;
     width: 100%;
-    max-width: 1330px;
-    padding: 20px;
+    z-index: 1000; /* Asegura que el menú esté siempre por encima de otros elementos */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra sutil */
 }
 
-header span {
-    font-size: 28px;
-    color: white; 
-    font-family: 'Poppins', sans-serif;
+nav a {
+    font-family: Poppins, sans-serif;
+    font-size: 16px;
+    color: #6f4f37; /* Color marrón */
+    padding: 10px 20px;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    position: relative; /* Posición relativa para poder colocar la línea */
+    line-height: 40px; /* Asegura que el texto esté centrado verticalmente */
 }
 
-menu a {
-    font-size: 18px;
-    font-weight: 600;
-    letter-spacing: 1px;
+nav a::after {
+    content: ''; /* Necesario para generar la línea */
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 4px;
+    background-color: #6f4f37; /* Color marrón para la línea */
 }
 
-@media (max-width: 400px) {
-    .interadmin-container {
-        width: 90%;
+nav a:hover::after {
+    width: 100%; /* Expande la línea al 100% en el hover */
+}
+
+
+@media (max-width: 768px) {
+    nav {
+        flex-direction: column; /* Cambia a columna en pantallas más pequeñas */
+        align-items: center; /* Centra los elementos en la columna */
+    }
+
+    nav a {
+        padding: 12px 15px;
+        font-size: 18px;
+        width: 100%; /* Ocupará todo el ancho disponible en la columna */
+        text-align: center; /* Centrado en dispositivos pequeños */
     }
 }
-
