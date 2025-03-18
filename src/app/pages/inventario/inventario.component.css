@@ -8,15 +8,44 @@ input {
     background-color: white;
 }
 
-.boton {
+nav {
+display: flex;
+justify-content: center;
+    background-color: #fff; 
     position: fixed;
-    top: 5px;
-    left: 5px;
-    padding: 10px 20px;
-    background-color: #6d4c41;
-    color: white;
-    border: none;
-    width: 90px;
-    font-size: 13px;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000; 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+body {
+    margin-top: 60px;
+}
+
+nav a {
     font-family: Poppins, sans-serif;
-  }
+    font-size: 16px;
+    color: #6f4f37; 
+    padding: 10px 20px;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    position: relative; 
+    line-height: 40px; 
+}
+
+nav a::after {
+    content: ''; /* Necesario para generar la línea */
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 4px;
+    background-color: #6f4f37; 
+}
+
+nav a:hover::after {
+    width: 100%; /* Expande la línea al 100% en el hover */
+}   

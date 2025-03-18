@@ -128,16 +128,3 @@ button:hover {
         width: 90%;
     }
 }
-
-button {
-    position: fixed;
-    top: 5px;
-    left: 5px;
-    padding: 10px 20px;
-    background-color: #6d4c41;
-    color: white;
-    border: none;
-    width: 90px;
-    font-size: 13px;
-    font-family: Poppins, sans-serif;
-  }

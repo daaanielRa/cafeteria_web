@@ -1,24 +1,35 @@
-<h2>Gestión de Clientes</h2>
+<nav>
+  <a href="/pedidos">Pedido</a>
+  <a href="/inventario">Inventario</a>
+  <a href="/historiaventas">Historial de ventas</a>
+  <a href="/empleados">Empleados</a>
+  <a href="/clientes">Clientes</a>
+  <a href="/informes">Informes</a>
+</nav>
+
+
+<div class="menu">
+  
+  <h2>Gestión de Clientes</h2>
   <form>
     <label for="Nombre">Nombre:</label>
     <input type="text" id="Nombre" placeholder="Nombre" required />
     <br /><br />
-
+    
     <label for="correo">Correo Electrónico:</label>
     <input type="email" id="correo" placeholder="Correo Electrónico" required />
     <br /><br />
-
+    
     <label for="contraseña">Contraseña:</label>
     <input type="password" id="contraseña" placeholder="Contraseña" required />
     <br /><br />
-
+    
     <div class="containerbuttom">
       <button type="submit" name="accion" value="agregar">Agregar</button>
       <button type="submit" name="accion" value="modificar">Modificar</button>
       <button type="submit" name="accion" value="eliminar">Eliminar</button>
     </div>
   </form>
-
-  <button class="boton" onclick="history.back()">Atrás</button>
-
+  
+</div>
 
