@@ -47,5 +47,25 @@ nav a::after {
 }
 
 nav a:hover::after {
-    width: 100%; /* Expande la línea al 100% en el hover */
+    width: 100%; /* Línea para expandir el hover */
 }   
+
+.invcontainer {
+    background: #fff;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 320px;
+    border: 2px solid #5d4037;
+}
+
+input{
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #d7ccc8;
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: #f3e5d8;
+    color: #5d4037;
+}

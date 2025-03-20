@@ -23,7 +23,7 @@ nav {
 }
 
 .pedidocontainer {
-  margin-top: 60px;
+  margin-top: 80px;
 }
 
 nav a {
@@ -50,6 +50,10 @@ nav a::after {
 
 nav a:hover::after {
   width: 100%; /* Expande la línea al 100% en el hover */
+}
+
+input{
+  max-width:max-content
 }
 
 
