@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import router from '@/router'
+import { FirebaseService } from '@/services/firebaseService'
+import { signInWithEmailAndPassword } from 'firebase/auth'
+import { doc, getDoc } from 'firebase/firestore'
 import { ref } from 'vue'
 
 /**
@@ -15,12 +18,24 @@ function registrarUsuario() {
   router.push('/registros')
 }
 
-function iniciarSesion() {
+async function iniciarSesion() {
   // TODO Hacer la conexion con firebase
-  alert(
-    `intentando iniciar sesión con correo: ${formulario.value.email} y contraseña: ${formulario.value.password}`,
-  )
+  try {
+    const usuario = await signInWithEmailAndPassword(
+      FirebaseService.auth,
+      formulario.value.email,
+      formulario.value.password,
+    )
+
+    console.log(usuario.user.uid)
+    router.push('/clientes')
+  } catch (error) {
+    alert('No autorizo')
+    console.error(error)
+  }
 }
+
+console.log(FirebaseService.app)
 </script>
 
 <template>
@@ -58,8 +73,6 @@ function iniciarSesion() {
 </template>
 
 <style scoped lang="css">
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
-
 #container {
   font-family: 'Poppins', sans-serif;
   display: flex;

@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import router from '@/router'
+import { FirebaseService } from '@/services/firebaseService'
+import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { doc, setDoc } from 'firebase/firestore'
 import { ref } from 'vue'
 
 const usuarioARegistrar = ref({
@@ -9,7 +12,29 @@ const usuarioARegistrar = ref({
   passwordCheck: '',
 })
 
-function registrarUsuario() {
+async function registrarUsuario() {
+  try {
+    const credenciales = await createUserWithEmailAndPassword(
+      FirebaseService.auth,
+      usuarioARegistrar.value.email,
+      usuarioARegistrar.value.password,
+    )
+
+    const uid = await credenciales.user.uid
+
+    const userRef = doc(FirebaseService.db, 'usuarios', uid)
+
+    await setDoc(userRef, {
+      name: usuarioARegistrar.value.name,
+      email: usuarioARegistrar.value.email,
+    })
+
+    alert('usuario creado')
+  } catch (error) {
+    alert('error al crear usuarios')
+    console.error(error)
+  }
+
   alert('usuario registrandose')
 }
 
@@ -85,8 +110,6 @@ body {
   height: 100vh;
   margin: 0;
 }
-
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 
 #container {
   font-family: 'Poppins', sans-serif;
