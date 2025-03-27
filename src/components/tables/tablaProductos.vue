@@ -1,7 +1,26 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { FirebaseService } from '@/services/firebaseService'
+import type { Producto } from '@/utils/types/productos'
+import { collection, getDocs } from 'firebase/firestore'
+import { onMounted, ref, type Ref } from 'vue'
+
+const productos: Ref<Producto[]> = ref([])
+
+onMounted(async () => {
+  const col = collection(FirebaseService.db, 'productos')
+
+  const snapshot = await getDocs(col)
+
+  productos.value = snapshot.docs.map((producto) => ({
+    nombre: producto.data().nombre,
+    cantidad: producto.data().cantidad,
+    precio: producto.data().precio,
+  }))
+})
+</script>
 
 <template>
-  <div id="table-container">
+  <div id="table-container" v-if="productos.length > 1">
     <table border="1">
       <thead>
         <tr>
@@ -12,21 +31,10 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>Dona</td>
-          <td>5</td>
-          <td>2</td>
-          <td>
-            <div>
-              <button>actualizar</button>
-              <button>eliminar</button>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>producto 2</td>
-          <td>5</td>
-          <td>2</td>
+        <tr v-for="producto in productos" :key="producto.nombre">
+          <td>{{ producto.nombre }}</td>
+          <td>{{ producto.cantidad }}</td>
+          <td>{{ producto.precio }}</td>
           <td>
             <div>
               <button>actualizar</button>
@@ -37,6 +45,7 @@
       </tbody>
     </table>
   </div>
+  <p v-else>Cargando productos...</p>
 </template>
 
 <style scoped lang="css">

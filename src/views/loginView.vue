@@ -2,7 +2,6 @@
 import router from '@/router'
 import { FirebaseService } from '@/services/firebaseService'
 import { signInWithEmailAndPassword } from 'firebase/auth'
-import { doc, getDoc } from 'firebase/firestore'
 import { ref } from 'vue'
 
 /**
@@ -12,11 +11,6 @@ const formulario = ref({
   email: '',
   password: '',
 })
-
-// esta funcion es lo mismo que href="/registros"
-function registrarUsuario() {
-  router.push('/registros')
-}
 
 async function iniciarSesion() {
   // TODO Hacer la conexion con firebase
@@ -34,8 +28,6 @@ async function iniciarSesion() {
     console.error(error)
   }
 }
-
-console.log(FirebaseService.app)
 </script>
 
 <template>
