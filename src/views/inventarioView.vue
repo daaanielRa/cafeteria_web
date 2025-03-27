@@ -1,6 +1,29 @@
 <script setup lang="ts">
 import PageBase from '@/components/layout/pageBase.vue'
 import TablaProductos from '@/components/tables/tablaProductos.vue'
+import { FirebaseService } from '@/services/firebaseService';
+import { addDoc, collection } from 'firebase/firestore';
+import { ref } from 'vue';
+
+const formProducto = ref({
+  nombre: "",
+  cantidad: 0,
+  precio: "",
+})
+
+async function anadirProducto() {
+
+  try {
+    const col=collection(FirebaseService.db,"productos") 
+  await addDoc(col, formProducto.value)
+    alert("producto añadido")
+  } catch (error) {
+    alert("error al añadir")
+    console.error(error);
+    
+  }
+}
+
 </script>
 
 <template>
@@ -9,25 +32,25 @@ import TablaProductos from '@/components/tables/tablaProductos.vue'
       <section class="invcontainer">
         <div class="card">
           <h2>Gestión de Productos</h2>
-          <form>
+          <form @submit.prevent="anadirProducto">
             <div>
               <label for="producto">Producto:</label>
-              <input type="text" id="producto" name="Nombre del producto" required />
+              <input type="text" v-model="formProducto.nombre" id="producto" name="Nombre del producto" required />
             </div>
             <div>
               <label for="cantidad">Cantidad:</label>
-              <input type="number" id="cantidad" min="1" required />
+              <input type="number" v-model="formProducto.cantidad" id="cantidad" min="1" required />
             </div>
             <div>
               <label for="precio">Precio:</label>
-              <input id="precio" name="precio" min="50" required />
+              <input type="text" v-model="formProducto.precio" id="precio" name="precio" min="50" required />
+            </div>
+            <div class="containerbuttom">
+              <button type="submit" name="accion" value="agregar" class="font-poppins">
+                Agregar producto
+              </button>
             </div>
           </form>
-          <div class="containerbuttom">
-            <button type="submit" name="accion" value="agregar" class="font-poppins">
-              Agregar producto
-            </button>
-          </div>
           <TablaProductos />
         </div>
       </section>
