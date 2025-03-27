@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import PageBase from '@/components/layout/pageBase.vue'
+import TablaEmpleados from '@/components/tables/tablaEmpleados.vue'
 </script>
 
 <template>
@@ -48,14 +49,11 @@ import PageBase from '@/components/layout/pageBase.vue'
           </select>
         </form>
         <div class="containerbuttom">
-          <button type="submit" name="accion" value="agregar" class="font-poppins">Agregar</button>
-          <button type="submit" name="accion" value="modificar" class="font-poppins">
-            Modificar
-          </button>
-          <button type="submit" name="accion" value="eliminar" class="font-poppins">
-            Eliminar
+          <button type="submit" name="accion" value="agregar" class="font-poppins">
+            Agregar empleado
           </button>
         </div>
+        <TablaEmpleados />
       </div>
     </template>
   </PageBase>
@@ -98,7 +96,7 @@ form input {
 }
 
 .containerbuttom button {
-  width: 100px;
+  width: 150px;
   height: 30px;
   background-color: #6d4c41;
   border: none;
@@ -107,8 +105,6 @@ form input {
 }
 
 .containerbuttom button:hover {
-  width: 100px;
-  height: 30px;
   cursor: pointer;
   background-color: #5d3e34;
   border: none;

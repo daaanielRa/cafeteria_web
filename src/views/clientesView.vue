@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import NavbarComponent from '@/components/navbarComponent.vue'
-import { ref } from 'vue'
 import PageBase from '@/components/layout/pageBase.vue'
+import TablaClientes from '@/components/tables/tablaClientes.vue'
+import { ref } from 'vue'
 
 const cliente = ref({
   nombre: '',
@@ -13,66 +13,63 @@ function gestionarUsuario() {}
 </script>
 
 <template>
-  <NavbarComponent />
-  <menu class="menu">
-    <section class="clientcontainer">
-      <div class="card">
-        <h2>Gestión de Clientes</h2>
-        <form @submit.prevent="gestionarUsuario">
+  <PageBase>
+    <template #main>
+      <menu class="menu">
+        <section class="clientcontainer">
+          <div class="card">
+            <h2>Gestión de Clientes</h2>
+            <form @submit.prevent="gestionarUsuario">
+              <div>
+                <label for="Nombre">Nombre:</label>
+                <input
+                  type="text"
+                  v-model="cliente.nombre"
+                  id="Nombre"
+                  placeholder="Nombre"
+                  class="font-poppins"
+                  required
+                />
+              </div>
 
-          
-          <div>
-            <label for="Nombre">Nombre:</label>
-            <input
-              type="text"
-              v-model="cliente.nombre"
-              id="Nombre"
-              placeholder="Nombre"
-              class="font-poppins"
-              required
-            />
-          </div>
+              <div>
+                <label for="correo">Correo Electrónico:</label>
+                <input
+                  type="email"
+                  v-model="cliente.correo"
+                  id="correo"
+                  placeholder="Correo Electrónico"
+                  class="font-poppins"
+                  required
+                />
+              </div>
 
-          <div>
-            <label for="correo">Correo Electrónico:</label>
-            <input
-              type="email"
-              v-model="cliente.correo"
-              id="correo"
-              placeholder="Correo Electrónico"
-              class="font-poppins"
-              required
-            />
-          </div>
+              <div>
+                <label for="contraseña">Contraseña:</label>
+                <input
+                  type="password"
+                  v-model="cliente.contraseña"
+                  id="contraseña"
+                  placeholder="Contraseña"
+                  class="font-poppins"
+                  required
+                  minlength="8"
+                />
+              </div>
 
-          <div>
-            <label for="contraseña">Contraseña:</label>
-            <input
-              type="password"
-              v-model="cliente.contraseña"
-              id="contraseña"
-              placeholder="Contraseña"
-              class="font-poppins"
-              required
-              minlength="8"
-            />
-          </div>
+              <div class="container-buttom">
+                <button type="submit" name="accion" value="agregar" class="font-poppins">
+                  Agregar cliente
+                </button>
+              </div>
+            </form>
 
-          <div class="container-buttom">
-            <button type="submit" name="accion" value="agregar" class="font-poppins">
-              Agregar
-            </button>
-            <button type="submit" name="accion" value="modificar" class="font-poppins">
-              Modificar
-            </button>
-            <button type="submit" name="accion" value="eliminar" class="font-poppins">
-              Eliminar
-            </button>
+            <TablaClientes />
           </div>
-        </form>
-      </div>
-    </section>
-  </menu>
+        </section>
+      </menu>
+    </template>
+  </PageBase>
 </template>
 
 <style scoped lang="css">
@@ -88,7 +85,7 @@ function gestionarUsuario() {}
   background-color: white;
   padding: 25px;
   border-radius: 20px;
-  width: 300px;
+  width: 800px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -120,7 +117,7 @@ input {
 }
 
 .container-buttom button {
-  width: 100px;
+  width: 150px;
   height: 30px;
   background-color: #6d4c41;
   border: none;
@@ -129,8 +126,6 @@ input {
 }
 
 .container-buttom button:hover {
-  width: 100px;
-  height: 30px;
   cursor: pointer;
   background-color: #5d3e34;
   border: none;
