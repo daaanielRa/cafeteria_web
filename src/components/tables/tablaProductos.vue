@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { FirebaseService } from '@/services/firebaseService'
+import { eliminarDocumento } from '@/utils/eliminarDocumentoFireStore'
 import type { Producto } from '@/utils/types/productos'
 import { collection, getDocs } from 'firebase/firestore'
 import { onMounted, ref, type Ref } from 'vue'
@@ -17,6 +18,18 @@ onMounted(async () => {
     precio: producto.data().precio,
   }))
 })
+
+async function eliminar(evt: Event) {
+  const elm = evt.target
+
+  const filaProducto: HTMLDivElement = elm?.parentElement.parentElement.parentElement
+
+  const nombreProducto: string = filaProducto.querySelector('#nombre-producto')?.innerHTML as string
+
+  await eliminarDocumento(nombreProducto, 'productos')
+
+  filaProducto.remove()
+}
 </script>
 
 <template>
@@ -32,13 +45,13 @@ onMounted(async () => {
       </thead>
       <tbody>
         <tr v-for="producto in productos" :key="producto.nombre">
-          <td>{{ producto.nombre }}</td>
+          <td id="nombre-producto">{{ producto.nombre }}</td>
           <td>{{ producto.cantidad }}</td>
           <td>{{ producto.precio }}</td>
           <td>
             <div>
               <button>actualizar</button>
-              <button>eliminar</button>
+              <button @click="eliminar">eliminar</button>
             </div>
           </td>
         </tr>
