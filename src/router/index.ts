@@ -2,7 +2,6 @@ import ClientesView from '@/views/clientesView.vue'
 import EmpleadosView from '@/views/empleadosView.vue'
 import LoginView from '@/views/loginView.vue'
 import PedidosView from '@/views/pedidosView.vue'
-import RegistroUsuarioView from '@/views/registroUsuarioView.vue'
 import inventarioView from '@/views/inventarioView.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import HistoriaventasView from '@/views/historiaventasView.vue'
@@ -15,11 +14,6 @@ const router = createRouter({
       path: '/',
       component: LoginView,
       meta: { title: 'Inicio de sesión' },
-    },
-    {
-      path: '/registros',
-      component: RegistroUsuarioView,
-      meta: { title: 'Registrate' },
     },
     {
       path: '/clientes',

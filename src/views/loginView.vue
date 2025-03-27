@@ -65,8 +65,6 @@ console.log(FirebaseService.app)
         <button type="submit">Iniciar sesión</button>
       </form>
 
-      <p class="register-link">¿No tienes cuenta? <a @click="registrarUsuario">Regístrate</a></p>
-
       <p id="error-message" class="error-message"></p>
     </div>
   </div>
@@ -152,23 +150,6 @@ button {
 
 button:hover {
   background: #5d4037;
-}
-
-/* Enlace de registro */
-.register-link {
-  margin-top: 10px;
-  font-size: 14px;
-}
-
-.register-link a {
-  color: #6d4c41;
-  font-weight: bold;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.register-link a:hover {
-  text-decoration: underline;
 }
 
 /* Mensaje de error */
