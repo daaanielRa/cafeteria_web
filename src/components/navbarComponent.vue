@@ -7,28 +7,34 @@ function navegar(ruta: string) {
 </script>
 
 <template>
+  <div>
   <nav>
     <a @click="navegar('/pedidos')">Pedido</a>
     <a @click="navegar('/inventario')">Inventario</a>
     <a @click="navegar('/historiaventas')">Historial de ventas</a>
     <a @click="navegar('/empleados')">Empleados</a>
     <a @click="navegar('/clientes')">Clientes</a>
-    <a @click="navegar('/informes')">Informes</a>
   </nav>
+
+  <button>cerrar sesion</button>
+  </div>
 </template>
 
 <style scoped lang="css">
-nav {
-  display: flex;
+div {
+display: flex;
   justify-content: center;
   background-color: #fff;
-  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   z-index: 1000;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
 }
+
+nav {
+  }
 nav a {
   font-family: Poppins, sans-serif;
   font-size: 16px;
