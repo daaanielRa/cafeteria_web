@@ -1,10 +1,10 @@
-import ClientesView from '@/views/clientesView.vue'
 import EmpleadosView from '@/views/empleadosView.vue'
 import LoginView from '@/views/loginView.vue'
 import PedidosView from '@/views/pedidosView.vue'
 import inventarioView from '@/views/inventarioView.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import HistoriaventasView from '@/views/historiaventasView.vue'
+import PruebasView from '@/views/pruebasView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -14,11 +14,6 @@ const router = createRouter({
       path: '/',
       component: LoginView,
       meta: { title: 'Inicio de sesión' },
-    },
-    {
-      path: '/clientes',
-      component: ClientesView,
-      meta: { title: 'gestion de clientes' },
     },
     {
       path: '/pedidos',
@@ -41,9 +36,9 @@ const router = createRouter({
       meta: { title: 'gestion de empleados' },
     },
     {
-      path: '/informes',
-      component: ClientesView,
-      meta: { title: 'informes' },
+      path: '/test',
+      component: PruebasView,
+      meta: { title: 'pruebas' },
     },
   ],
 })

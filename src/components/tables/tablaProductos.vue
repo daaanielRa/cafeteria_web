@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { FirebaseService } from '@/services/firebaseService'
 import { eliminarDocumento } from '@/utils/eliminarDocumentoFireStore'
+import { obtenerNombre } from '@/utils/obtenerFilaDeTabla'
 import type { Producto } from '@/utils/types/productos'
 import { collection, getDocs } from 'firebase/firestore'
 import { onMounted, ref, type Ref } from 'vue'
@@ -20,20 +21,34 @@ onMounted(async () => {
 })
 
 async function eliminar(evt: Event) {
-  const elm = evt.target
+  try {
+    if (evt.target) {
+      const nombreProducto: string = obtenerNombre(evt.target, '#nombre-producto')
+      await eliminarDocumento(nombreProducto, 'productos')
+    }
+  } catch (error) {
+    alert('Error al eliminar el producto')
+    console.error(error)
+  }
+}
 
-  const filaProducto: HTMLDivElement = elm?.parentElement.parentElement.parentElement
+async function modificar(evt: Event) {
+  try {
+    if (evt.target) {
+      const nombreProducto: string = obtenerNombre(evt.target, '#nombre-producto')
 
-  const nombreProducto: string = filaProducto.querySelector('#nombre-producto')?.innerHTML as string
-
-  await eliminarDocumento(nombreProducto, 'productos')
-
-  filaProducto.remove()
+      alert('falta implementar')
+      console.log(nombreProducto)
+    }
+  } catch (error) {
+    alert('Error al modificar el producto')
+    console.error(error)
+  }
 }
 </script>
 
 <template>
-  <div id="table-container" v-if="productos.length > 1">
+  <div class="app-table" v-if="productos.length > 1">
     <table border="1">
       <thead>
         <tr>
@@ -50,8 +65,8 @@ async function eliminar(evt: Event) {
           <td>{{ producto.precio }}</td>
           <td>
             <div>
-              <button>actualizar</button>
-              <button @click="eliminar">eliminar</button>
+              <button @click="modificar" class="app-button">actualizar</button>
+              <button @click="eliminar" class="app-button">eliminar</button>
             </div>
           </td>
         </tr>
@@ -61,54 +76,4 @@ async function eliminar(evt: Event) {
   <p v-else>Cargando productos...</p>
 </template>
 
-<style scoped lang="css">
-#table-container {
-  margin-top: 50px;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-th,
-td {
-  padding: 10px;
-  border: 1px solid #ddd;
-}
-
-th {
-  background-color: #6d4c41;
-  color: white;
-}
-
-td {
-  background-color: #f9f9f9;
-}
-
-td div {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-}
-
-td div button {
-  width: 100px;
-  height: 30px;
-  background-color: #6d4c41;
-  border: none;
-  border-radius: 10px;
-  color: white;
-}
-
-td div button:hover {
-  width: 100px;
-  height: 30px;
-  cursor: pointer;
-  background-color: #5d3e34;
-  border: none;
-  border-radius: 10px;
-  color: white;
-}
-</style>
+<style scoped lang="css"></style>
