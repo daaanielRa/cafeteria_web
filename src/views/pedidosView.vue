@@ -58,7 +58,7 @@ import PageBase from '@/components/layout/pageBase.vue'
   background: #fff;
   padding: 25px;
   border-radius: 20px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 10px var(--primary-200);
   text-align: center;
   width: 100%;
   max-width: 380px;
@@ -74,7 +74,7 @@ nav {
   left: 0;
   width: 100%;
   z-index: 1000;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 5px var(--primary-200);
 }
 
 .pedidocontainer {

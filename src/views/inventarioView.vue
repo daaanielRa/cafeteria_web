@@ -7,7 +7,7 @@ import { ref } from 'vue'
 
 const formProducto = ref({
   nombre: '',
-  cantidad: 0,
+  cantidad: 1,
   precio: '',
 })
 
@@ -27,9 +27,9 @@ async function anadirProducto() {
   <PageBase>
     <template #main>
       <section class="invcontainer">
-        <div class="card">
-          <h2>Gestión de Productos</h2>
-          <form @submit.prevent="anadirProducto">
+        <div class="app-card">
+          <p class="titulo-modulo">Gestión de Productos</p>
+          <form class="app-form" @submit.prevent="anadirProducto">
             <div>
               <label for="producto">Producto:</label>
               <input
@@ -37,6 +37,7 @@ async function anadirProducto() {
                 v-model="formProducto.nombre"
                 id="producto"
                 name="Nombre del producto"
+                placeholder="Nombre del producto"
                 required
               />
             </div>
@@ -46,17 +47,21 @@ async function anadirProducto() {
             </div>
             <div>
               <label for="precio">Precio:</label>
-              <input
-                type="text"
-                v-model="formProducto.precio"
-                id="precio"
-                name="precio"
-                min="50"
-                required
-              />
+              <div class="precio-input">
+                <p class="signo-peso">$</p>
+                <input
+                  type="text"
+                  v-model="formProducto.precio"
+                  id="precio"
+                  name="precio"
+                  min="50"
+                  placeholder="50"
+                  required
+                />
+              </div>
             </div>
-            <div class="containerbuttom">
-              <button type="submit" name="accion" value="agregar" class="font-poppins">
+            <div class="form-buttons">
+              <button class="app-button" type="submit" name="accion" value="agregar">
                 Agregar producto
               </button>
             </div>
@@ -70,63 +75,11 @@ async function anadirProducto() {
 </template>
 
 <style scoped lang="css">
-.invcontainer {
-  width: 100dvw;
-  height: 80dvh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.invcontainer .card {
-  background-color: white;
-  padding: 25px;
-  border-radius: 20px;
+.app-card {
   width: 600px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.containerbuttom {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-}
-
-form div {
-  display: flex;
-  flex-direction: column;
-}
-
-input {
-  padding: 10px;
-  border: 1px solid #d7ccc8;
-  border-radius: 8px;
-  font-size: 16px;
-  background-color: #f3e5d8;
-  color: #5d4037;
-}
-
-.containerbuttom {
-  margin: 20px 0 0 0;
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-}
-
-.containerbuttom button {
+.form-buttons button {
   width: 150px;
-  height: 30px;
-  background-color: #6d4c41;
-  border: none;
-  border-radius: 10px;
-  color: white;
-}
-
-.containerbuttom button:hover {
-  cursor: pointer;
-  background-color: #5d3e34;
-  border: none;
-  border-radius: 10px;
-  color: white;
 }
 </style>

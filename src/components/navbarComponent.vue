@@ -17,49 +17,46 @@ const user = {
       <a v-if="user.isAdmin" @click="navegar('/inventario')">Inventario</a>
       <a v-if="user.isAdmin" @click="navegar('/historiaventas')">Historial de ventas</a>
       <a v-if="user.isAdmin" @click="navegar('/empleados')">Empleados</a>
-      <a v-if="user.isAdmin" @click="navegar('/clientes')">Clientes</a>
     </nav>
-
-    <button>cerrar sesion</button>
+    <button class="app-button">cerrar sesion</button>
   </div>
 </template>
 
 <style scoped lang="css">
 div {
   display: flex;
-  justify-content: center;
-  background-color: #fff;
-  top: 0;
-  left: 0;
+  align-items: center;
+  justify-content: space-around;
+  background-color: var(--background-50);
   width: 100%;
+  height: 50px;
   z-index: 1000;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 5px var(--primary-200);
 }
 
 nav a {
-  font-family: Poppins, sans-serif;
   font-size: 16px;
-  color: #6f4f37;
   padding: 10px 20px;
-  text-decoration: none;
   display: inline-block;
   text-align: center;
   position: relative;
   line-height: 40px;
 }
 
+nav a:hover {
+  cursor: pointer;
+}
+
 nav a::after {
   content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
+  display: flex;
   width: 0;
   height: 4px;
-  background-color: #6f4f37;
+  background-color: var(--primary-500);
+  transition: width 0.3s ease-in-out;
 }
 
 nav a:hover::after {
-  width: 100%;
-  /* Línea para todo el a:hover */
+  width: 100%; /* Línea para todo el a:hover */
 }
 </style>

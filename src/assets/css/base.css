@@ -1,0 +1,126 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+.font-poppins {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+body {
+  background-color: var(--background-100);
+  color: var(--text-800);
+  font-size: 16px;
+}
+
+.titulo-modulo {
+  font-size: 1.5em;
+  margin: 10px 0;
+  font-weight: bold;
+}
+
+.app-button {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  width: 100px;
+  height: 30px;
+  background-color: var(--primary-600);
+  border: none;
+  border-radius: 10px;
+  color: white;
+  transition: transform 0.2s ease-in-out;
+  transition: box-shadow 0.1s ease-in-out;
+}
+
+.app-button:hover {
+  cursor: pointer;
+  background-color: var(--primary-700);
+  border: none;
+  border-radius: 10px;
+  transform: translate(0, -1px);
+  box-shadow: 0 2px 5px var(--primary-700);
+}
+
+.app-card {
+  background-color: var(--background-50);
+  padding: 25px;
+  border-radius: 20px;
+  box-shadow: 0 4px 10px var(--primary-200);
+}
+
+.app-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.app-form div {
+  display: flex;
+  flex-direction: column;
+}
+
+.app-form input,
+.app-form select {
+  padding: 10px;
+  border: 1px solid var(--secondary-200);
+  border-radius: 8px;
+  font-size: 16px;
+  background-color: var(--secondary-100);
+  color: var(--text-800);
+}
+
+.app-form .precio-input {
+  position: relative;
+}
+
+.app-form .precio-input .signo-peso {
+  position: absolute;
+  width: 0.5em;
+  top: 50%;
+  left: 10px;
+  transform: translate(0, -50%);
+}
+
+.app-form .precio-input input {
+  padding-left: 20px;
+}
+
+.app-form .form-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.app-table {
+  #table-container {
+    margin-top: 50px;
+  }
+
+  table {
+    margin: 10px 0 0 0;
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  th,
+  td {
+    padding: 10px;
+    border: 1px solid var(--accent-500);
+  }
+
+  th {
+    background-color: var(--primary-600);
+    color: var(--background-50);
+  }
+
+  td {
+    background-color: var(--background-50);
+  }
+
+  td div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+  }
+}

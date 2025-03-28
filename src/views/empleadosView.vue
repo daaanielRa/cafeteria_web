@@ -31,10 +31,9 @@ async function anadirEmpleado(){
 <template>
   <PageBase>
     <template #main>
-      <div class="content">
-        <p>Gestión de Empleados</p>
-
-        <form @submit.prevent="anadirEmpleado">
+      <div class="app-card">
+        <p class="titulo-modulo">Gestión de Empleados</p>
+        <form class="app-form">
           <div>
             <label for="Nombre">Nombre:</label>
             <input type="text" id="Nombre" placeholder="Nombre" class="font-poppins" required />
@@ -67,17 +66,16 @@ async function anadirEmpleado(){
           </div>
 
           <label for="usuario">Tipo de usuario:</label>
-          <select v-model="formEmpleado.tipoUsuario" id="usuario" name="usuario" required>
-            <option value="" selected disabled></option>
+          <select id="usuario" name="usuario" required>
             <option value="empleado">Empleado</option>
             <option value="administrador">Administrador</option>
           </select>
+          <div class="form-buttons">
+            <button type="submit" name="accion" value="agregar" class="app-button">
+              Agregar empleado
+            </button>
+          </div>
         </form>
-        <div class="containerbuttom">
-          <button type="submit" name="accion" value="agregar" class="font-poppins">
-            Agregar empleado
-          </button>
-        </div>
         <TablaEmpleados />
       </div>
     </template>
@@ -85,55 +83,11 @@ async function anadirEmpleado(){
 </template>
 
 <style scoped lang="css">
-.content {
-  margin: 10px 0 0 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.app-card {
+  width: 1100px;
 }
 
-.content p {
-  font-weight: bold;
-  font-size: 30px;
-  padding: 0;
-  margin: 0;
-}
-
-.content form div {
-  display: flex;
-  flex-direction: column;
-  margin: 10px 0 10px 0;
-}
-
-form input {
-  width: 300px;
-  height: 30px;
-  padding: 0 0 0 10px;
-  border: none;
-  border-radius: 5px;
-}
-
-.containerbuttom {
-  margin: 20px 0 0 0;
-  display: flex;
-  flex-direction: column-;
-  gap: 10px;
-}
-
-.containerbuttom button {
-  width: 150px;
-  height: 30px;
-  background-color: #6d4c41;
-  border: none;
-  border-radius: 10px;
-  color: white;
-}
-
-.containerbuttom button:hover {
-  cursor: pointer;
-  background-color: #5d3e34;
-  border: none;
-  border-radius: 10px;
-  color: white;
+.app-button {
+  width: max-content;
 }
 </style>
