@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import TheToast from '@/components/layout/TheToast.vue'
 import router from '@/router'
 import { FirebaseService } from '@/services/firebaseService'
 import { signInWithEmailAndPassword } from 'firebase/auth'
@@ -9,24 +10,50 @@ const formulario = ref({
   password: '',
 })
 
+const toast = ref({
+  error: true,
+  message: 'Mensaje de la app.',
+  isShown: false,
+})
+
 async function iniciarSesion() {
   try {
-    const usuario = await signInWithEmailAndPassword(
+    await signInWithEmailAndPassword(
       FirebaseService.auth,
       formulario.value.email,
       formulario.value.password,
     )
 
-    console.log(usuario.user.uid)
-    router.push('/clientes')
+    toast.value.error = false
+    toast.value.isShown = true
+    toast.value.message = '¡bienvenido otra vez!'
+
+    setTimeout(() => {
+      toast.value.isShown = false
+      toast.value.message = '¡bienvenido otra vez!'
+      toast.value.error = true
+      router.push('/empleados')
+    }, 3000)
   } catch (error) {
-    alert('No autorizo')
-    console.error(error)
+    toast.value.isShown = true
+    toast.value.message = error as string
+
+    setTimeout(() => {
+      toast.value.isShown = false
+      toast.value.message = error as string
+    }, 3000)
   }
 }
 </script>
 
 <template>
+  <TheToast
+    id="toast"
+    class="toast-hidden"
+    :error="toast.error"
+    :message="toast.message"
+    :is-shown="toast.isShown"
+  />
   <div id="container">
     <div class="app-card">
       <div class="bienvenida">
