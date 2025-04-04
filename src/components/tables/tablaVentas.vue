@@ -1,9 +1,23 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { FirebaseService } from '@/services/firebaseService'
+import type { Venta } from '@/utils/types/ventas'
+import { collection, getDocs } from 'firebase/firestore'
+import { onMounted, ref, type Ref } from 'vue'
 
-const ventas = ref([{}, {}])
+const ventas: Ref<Venta[]> = ref([])
 
-onMounted(async () => {})
+onMounted(async () => {
+  const col = collection(FirebaseService.db, 'ventas')
+
+  const snapshot = await getDocs(col)
+
+  ventas.value = snapshot.docs.map((venta) => ({
+    fecha: venta.data().fecha,
+    nombreProducto: venta.data().nombreProducto,
+    cantidad: venta.data().cantidad,
+    metodoPago: venta.data().metodoPago,
+  }))
+})
 </script>
 
 <template>
@@ -11,21 +25,17 @@ onMounted(async () => {})
     <table>
       <thead>
         <tr>
-          <th>Fecha</th>
+          <th>Fecha y hora</th>
           <th>Producto</th>
-          <th>Mesa</th>
           <th>Cantidad</th>
-          <th>Total</th>
           <th>Método de pago</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="venta in ventas" :key="venta.id">
+        <tr v-for="(venta, index) in ventas" :key="index">
           <td>{{ venta.fecha }}</td>
           <td>{{ venta.nombreProducto }}</td>
-          <td>{{ venta.mesa }}</td>
           <td>{{ venta.cantidad }}</td>
-          <td>{{ venta.total }}</td>
           <td>{{ venta.metodoPago }}</td>
         </tr>
       </tbody>
@@ -33,5 +43,3 @@ onMounted(async () => {})
   </div>
   <p v-else>Cargando ventas...</p>
 </template>
-
-<style scoped lang="css"></style>

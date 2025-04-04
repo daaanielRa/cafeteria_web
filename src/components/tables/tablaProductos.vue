@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { FirebaseService } from '@/services/firebaseService'
-import { eliminarDocumento } from '@/utils/eliminarDocumentoFireStore'
-import { obtenerNombre } from '@/utils/obtenerFilaDeTabla'
+import { obtenerCelda } from '@/utils/handlers/tablas'
 import type { Producto } from '@/utils/types/productos'
 import { collection, getDocs } from 'firebase/firestore'
 import { onMounted, ref, type Ref } from 'vue'
@@ -20,26 +19,20 @@ onMounted(async () => {
   }))
 })
 
-async function eliminar(evt: Event) {
+async function eliminarProducto(evt: Event) {
   try {
-    if (evt.target) {
-      const nombreProducto: string = obtenerNombre(evt.target, '#nombre-producto')
-      await eliminarDocumento(nombreProducto, 'productos')
-    }
+    const nombreProducto: string = obtenerCelda(evt, '#nombre-producto').innerHTML
+    await FirebaseService.eliminarDocumento('productos', nombreProducto)
   } catch (error) {
     alert('Error al eliminar el producto')
     console.error(error)
   }
 }
 
-async function modificar(evt: Event) {
+async function modificarProducto(evt: Event) {
   try {
-    if (evt.target) {
-      const nombreProducto: string = obtenerNombre(evt.target, '#nombre-producto')
-
-      alert('falta implementar')
-      console.log(nombreProducto)
-    }
+    const nombreProducto: string = obtenerCelda(evt, '#nombre-producto').innerHTML
+    alert('se va a editar' + nombreProducto)
   } catch (error) {
     alert('Error al modificar el producto')
     console.error(error)
@@ -48,7 +41,7 @@ async function modificar(evt: Event) {
 </script>
 
 <template>
-  <div class="app-table" v-if="productos.length > 1">
+  <div class="app-table" v-if="productos.length > 0">
     <table border="1">
       <thead>
         <tr>
@@ -59,14 +52,14 @@ async function modificar(evt: Event) {
         </tr>
       </thead>
       <tbody>
-        <tr v-for="producto in productos" :key="producto.nombre">
+        <tr v-for="(producto, index) in productos" :key="index">
           <td id="nombre-producto">{{ producto.nombre }}</td>
           <td>{{ producto.cantidad }}</td>
           <td>{{ producto.precio }}</td>
           <td>
             <div>
-              <button @click="modificar" class="app-button">actualizar</button>
-              <button @click="eliminar" class="app-button">eliminar</button>
+              <button @click="modificarProducto" class="app-button">actualizar</button>
+              <button @click="eliminarProducto" class="app-button">eliminar</button>
             </div>
           </td>
         </tr>

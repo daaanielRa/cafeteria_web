@@ -1,12 +1,23 @@
 <script setup lang="ts">
 import router from '@/router'
+import { FirebaseService } from '@/services/firebaseService'
+import { useUsuarioActualStore } from '@/stores/UsuarioActual'
+import { signOut } from 'firebase/auth'
 
-function navegar(ruta: string) {
+const usuarioAdministrador: boolean = useUsuarioActualStore().administrador
+
+function navegar(ruta: string): void {
   router.push(ruta)
 }
 
-const user = {
-  isAdmin: true,
+async function cerrarSesion(): Promise<void> {
+  try {
+    await signOut(FirebaseService.auth)
+    useUsuarioActualStore().cerrarSesion()
+    router.push('/')
+  } catch (error) {
+    alert('no se pudo cerrar sesión' + error)
+  }
 }
 </script>
 
@@ -14,11 +25,13 @@ const user = {
   <div>
     <nav>
       <a @click="navegar('/pedidos')">Pedido</a>
-      <a v-if="user.isAdmin" @click="navegar('/inventario')">Inventario</a>
-      <a v-if="user.isAdmin" @click="navegar('/historiaventas')">Historial de ventas</a>
-      <a v-if="user.isAdmin" @click="navegar('/empleados')">Empleados</a>
+      <div class="admin" v-if="usuarioAdministrador">
+        <a @click="navegar('/inventario')">Inventario</a>
+        <a @click="navegar('/historiaventas')">Historial de ventas</a>
+        <a @click="navegar('/empleados')">Empleados</a>
+      </div>
     </nav>
-    <button class="app-button">cerrar sesion</button>
+    <button class="app-button" @click="cerrarSesion">cerrar sesion</button>
   </div>
 </template>
 
@@ -30,8 +43,20 @@ div {
   background-color: var(--background-50);
   width: 100%;
   height: 50px;
-  z-index: 1000;
+  z-index: 100;
   box-shadow: 0 2px 5px var(--primary-200);
+}
+
+nav {
+  display: flex;
+  align-items: center;
+}
+
+.admin {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  box-shadow: none;
 }
 
 nav a {

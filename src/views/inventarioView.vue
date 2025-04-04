@@ -2,10 +2,10 @@
 import PageBase from '@/components/layout/pageBase.vue'
 import TablaProductos from '@/components/tables/tablaProductos.vue'
 import { FirebaseService } from '@/services/firebaseService'
-import { addDoc, collection } from 'firebase/firestore'
-import { ref } from 'vue'
+import type { Producto } from '@/utils/types/productos'
+import { ref, type Ref } from 'vue'
 
-const formProducto = ref({
+const formProducto: Ref<Producto> = ref({
   nombre: '',
   cantidad: 1,
   precio: '',
@@ -13,8 +13,7 @@ const formProducto = ref({
 
 async function anadirProducto() {
   try {
-    const col = collection(FirebaseService.db, 'productos')
-    await addDoc(col, formProducto.value)
+    await FirebaseService.crearDocumento('productos', formProducto.value)
     alert('producto añadido')
   } catch (error) {
     alert('error al añadir')

@@ -1,84 +1,82 @@
 <script setup lang="ts">
-import { eliminarDocumento } from '@/utils/eliminarDocumentoFireStore'
-import { obtenerNombre } from '@/utils/obtenerFilaDeTabla'
+import { FirebaseService } from '@/services/firebaseService'
+import { obtenerCelda } from '@/utils/handlers/tablas'
+import type { Empleado } from '@/utils/types/empleados'
+import { collection, getDocs } from 'firebase/firestore'
 import { onMounted, ref, type Ref } from 'vue'
-import { faker } from '@faker-js/faker'
-
-interface Empleado {
-  nombre: string
-  correo: string
-  cargo: string
-  horario: string
-  tipo: string
-}
 
 const empleados: Ref<Empleado[]> = ref([])
 
-onMounted(async () => {
-  empleados.value = Array.from({ length: 20 }, () => ({
-    nombre: faker.person.fullName(),
-    correo: faker.internet.email(),
-    cargo: faker.person.jobArea(),
-    horario: `${faker.date.anytime().getHours()}:${faker.date.anytime().getMinutes()} ${faker.date.anytime().getHours() > 12 ? 'PM' : 'AM'}`,
-    tipo: Math.random() > 0.5 ? 'Administrador' : 'Empleado',
-  }))
-})
-
-async function eliminar(evt: Event) {
+async function eliminarEmpleado(evt: Event) {
   try {
-    if (evt.target) {
-      const nombreEmpleado: string = obtenerNombre(evt.target, '#nombre-empleado')
-      await eliminarDocumento(nombreEmpleado, 'empleados')
-    }
+    const celda = obtenerCelda(evt, '#nombre-empleado')
+    const nombreEmpleado: string = celda.innerHTML
+    FirebaseService.eliminarUsuario('usuarios', nombreEmpleado)
+    alert('se ha eliminado este usuario')
+    celda.parentElement?.remove()
   } catch (error) {
-    alert('Error al eliminar el empleado')
-    console.error(error)
+    alert(error)
+    console.log(error)
   }
 }
 
 async function modificar(evt: Event) {
   try {
-    if (evt.target) {
-      const nombreEmpleado: string = obtenerNombre(evt.target, '#nombre-empleado')
-
-      alert('falta implementar')
-      console.log(nombreEmpleado)
-    }
+    const nombreEmpleado: string = obtenerCelda(evt, '#nombre-empleado').innerHTML
+    alert('se está modificando ' + nombreEmpleado)
   } catch (error) {
     alert('Error al modificar el empleado')
     console.error(error)
   }
 }
+
+onMounted(async () => {
+  const col = collection(FirebaseService.db, 'usuarios')
+
+  empleados.value = (await getDocs(col)).docs.map((usuario) => ({
+    nombre: usuario.data().nombre,
+    correo: usuario.data().correo,
+    cargo: usuario.data().cargo,
+    horario: {
+      entrada: usuario.data().horario.entrada,
+      salida: usuario.data().horario.salida,
+    },
+    tipo: usuario.data().tipo,
+  }))
+})
 </script>
 
 <template>
   <div class="app-table">
-    <table border="1">
+    <table border="1" v-if="empleados.length > 0">
       <thead>
         <tr>
           <th>Nombre del empleado</th>
           <th>Correo electrónico</th>
           <th>Cargo</th>
-          <th>Horario</th>
+          <th>Hora de entrada</th>
+          <th>Hora de salida</th>
           <th>Tipo de usuario</th>
           <th>Acciones</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="empleado in empleados" :key="empleado.nombre">
+        <tr v-for="(empleado, index) in empleados" :key="index">
           <td id="nombre-empleado">{{ empleado.nombre }}</td>
           <td>{{ empleado.correo }}</td>
           <td>{{ empleado.cargo }}</td>
-          <td>{{ empleado.horario }}</td>
+          <td>{{ empleado.horario.entrada.toDate().toLocaleTimeString() }}</td>
+          <td>{{ empleado.horario.salida.toDate().toLocaleTimeString() }}</td>
           <td>{{ empleado.tipo }}</td>
           <td>
             <div>
               <button @click="modificar" class="app-button">actualizar</button>
-              <button @click="eliminar" class="app-button">eliminar</button>
+              <button @click="eliminarEmpleado" class="app-button">eliminar</button>
             </div>
           </td>
         </tr>
       </tbody>
     </table>
+    <p v-else>Cargando datos...</p>
   </div>
 </template>

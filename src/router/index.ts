@@ -1,10 +1,11 @@
+import { useUsuarioActualStore } from '@/stores/UsuarioActual'
 import EmpleadosView from '@/views/empleadosView.vue'
-import LoginView from '@/views/loginView.vue'
-import PedidosView from '@/views/pedidosView.vue'
-import inventarioView from '@/views/inventarioView.vue'
-import { createRouter, createWebHistory } from 'vue-router'
 import HistoriaventasView from '@/views/historiaventasView.vue'
-import PruebasView from '@/views/pruebasView.vue'
+import InventarioView from '@/views/inventarioView.vue'
+import LoginView from '@/views/loginView.vue'
+import NotFoundView from '@/views/notFoundView.vue'
+import PedidosView from '@/views/pedidosView.vue'
+import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -13,32 +14,32 @@ const router = createRouter({
     {
       path: '/',
       component: LoginView,
-      meta: { title: 'Inicio de sesión' },
+      meta: { title: 'Inicio de sesión', requiereAdmin: false, requiereIniciarSesion: false },
     },
     {
       path: '/pedidos',
       component: PedidosView,
-      meta: { title: 'gestion de pedidos' },
+      meta: { title: 'gestion de pedidos', requiereAdmin: false, requiereIniciarSesion: true },
     },
     {
       path: '/inventario',
-      component: inventarioView,
-      meta: { title: 'gestion de inventario' },
+      component: InventarioView,
+      meta: { title: 'gestion de inventario', requiereAdmin: true, requiereIniciarSesion: true },
     },
     {
       path: '/historiaventas',
       component: HistoriaventasView,
-      meta: { title: 'historial de ventas' },
+      meta: { title: 'historial de ventas', requiereAdmin: true, requiereIniciarSesion: true },
     },
     {
       path: '/empleados',
       component: EmpleadosView,
-      meta: { title: 'gestion de empleados' },
+      meta: { title: 'gestion de empleados', requiereAdmin: true, requiereIniciarSesion: true },
     },
     {
-      path: '/test',
-      component: PruebasView,
-      meta: { title: 'pruebas' },
+      path: '/:pathMatch(.*)*',
+      component: NotFoundView,
+      meta: { title: 'oops', requiereAdmin: false, requiereIniciarSesion: false },
     },
   ],
 })
@@ -46,6 +47,26 @@ const router = createRouter({
 // ? esta funcion hace que el titulo del documento cambie dinamicamente
 router.afterEach((to) => {
   document.title = (to.meta.title as string) + ' - YCoffee'
+})
+
+router.beforeEach((to, from, next) => {
+  const usuarioStore = useUsuarioActualStore()
+
+  if (to.meta.requiereIniciarSesion && !usuarioStore.usuario) {
+    alert('debes iniciar sesión primero')
+    return next('/')
+  }
+
+  if (to.meta.requiereAdmin && !usuarioStore.administrador) {
+    alert('No tienes permisos para acceder')
+    return next('/pedidos')
+  }
+
+  if (to.path == '/' && usuarioStore.usuario) {
+    return next('/pedidos')
+  }
+
+  next()
 })
 
 export default router
