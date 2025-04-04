@@ -14,6 +14,10 @@ service cloud.firestore {
       allow write: if comprobarEstructuraProductos(request.resource.data);
     }
 
+    match /ventas/{ventaID} {
+      allow write: if comprobarEstructuraVentas(request.resource.data)
+    }
+
     function comprobarEstructuraUsuarios(data) {
       return data.nombre is string &&
              data.correo is string &&
@@ -31,6 +35,14 @@ service cloud.firestore {
              data.cantidad is number &&
              data.precio is string &&
              data.keys().size() == 3;
+    }
+
+    function comprobarEstructuraVentas(data) {
+      return data.producto is string &&
+             data.fecha is timestamp &&
+             data.cantidad is number &&
+             data.metodoPago is string &&
+             data.keys().size() == 4;
     }
   }
 }
