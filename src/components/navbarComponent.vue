@@ -44,7 +44,7 @@ const usuarioActual: string = useUsuarioActualStore().nombre
 div {
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  padding: 0 10px;
   background-color: var(--background-50);
   height: 50px;
   z-index: 100;
@@ -65,7 +65,7 @@ nav {
 
 nav a {
   font-size: 16px;
-  padding: 10px 20px;
+  padding: 10px;
   display: inline-block;
   text-align: center;
   position: relative;
