@@ -1,0 +1,63 @@
+/* Estilos para el menú */
+body,
+html {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+  background-color: #fff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  box-shadow: 0 2px 5px var(--primary-200);
+}
+
+body {
+  margin-top: 60px;
+}
+
+nav a {
+  font-family: Poppins, sans-serif;
+  font-size: 16px;
+  color: #6f4f37;
+  padding: 10px 20px;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+  position: relative;
+  line-height: 40px;
+}
+
+nav a::after {
+  content: ''; /* Necesario para generar la línea */
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 4px;
+  background-color: #6f4f37;
+}
+
+nav a:hover::after {
+  width: 100%; /* Expande la línea al 100% en el hover */
+}
+
+@media (max-width: 768px) {
+  nav {
+    flex-direction: column; /* Cambia a columna en pantallas más pequeñas */
+    align-items: center; /* Centra los elementos en la columna */
+  }
+
+  nav a {
+    padding: 12px 15px;
+    font-size: 18px;
+    width: 100%; /* Ocupará todo el ancho disponible en la columna */
+    text-align: center; /* Centrado en dispositivos pequeños */
+  }
+}

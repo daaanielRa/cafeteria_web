@@ -1,38 +1,40 @@
 {
-  "name": "cafeteria-webb",
-  "version": "0.0.0",
-  "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test"
-  },
+  "name": "cafeteria-web",
+  "version": "2.0.0",
   "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "run-p type-check \"build-only {@}\" --",
+    "preview": "vite preview",
+    "build-only": "vite build",
+    "type-check": "vue-tsc --build",
+    "lint": "eslint . --fix",
+    "format": "prettier --write src/"
+  },
   "dependencies": {
-    "@angular/animations": "^19.1.0",
-    "@angular/common": "^19.1.0",
-    "@angular/compiler": "^19.1.0",
-    "@angular/core": "^19.1.0",
-    "@angular/forms": "^19.1.0",
-    "@angular/platform-browser": "^19.1.0",
-    "@angular/platform-browser-dynamic": "^19.1.0",
-    "@angular/router": "^19.1.0",
-    "rxjs": "~7.8.0",
-    "tslib": "^2.3.0",
-    "zone.js": "~0.15.0"
+    "firebase": "^11.5.0",
+    "pinia": "^3.0.1",
+    "pinia-plugin-persistedstate": "^4.2.0",
+    "vue": "^3.5.13",
+    "vue-router": "^4.5.0"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^19.1.7",
-    "@angular/cli": "^19.1.7",
-    "@angular/compiler-cli": "^19.1.0",
-    "@types/jasmine": "~5.1.0",
-    "jasmine-core": "~5.5.0",
-    "karma": "~6.4.0",
-    "karma-chrome-launcher": "~3.2.0",
-    "karma-coverage": "~2.2.0",
-    "karma-jasmine": "~5.1.0",
-    "karma-jasmine-html-reporter": "~2.1.0",
-    "typescript": "~5.7.2"
+    "@faker-js/faker": "^9.6.0",
+    "@tsconfig/node22": "^22.0.0",
+    "@types/node": "^22.13.9",
+    "@vitejs/plugin-vue": "^5.2.1",
+    "@vue/eslint-config-prettier": "^10.2.0",
+    "@vue/eslint-config-typescript": "^14.5.0",
+    "@vue/tsconfig": "^0.7.0",
+    "eslint": "^9.21.0",
+    "eslint-plugin-vue": "~10.0.0",
+    "jiti": "^2.4.2",
+    "npm-run-all2": "^7.0.2",
+    "prettier": "3.5.3",
+    "typescript": "~5.8.0",
+    "vite": "^6.2.1",
+    "vite-plugin-vue-devtools": "^7.7.2",
+    "vue-tsc": "^2.2.8"
   }
 }

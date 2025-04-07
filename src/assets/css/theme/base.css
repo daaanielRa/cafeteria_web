@@ -1,0 +1,143 @@
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+.font-poppins {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.font-pacifico {
+  font-family: 'Pacifico', cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+
+* {
+  scrollbar-width: none;
+}
+
+body {
+  background-color: var(--background-100);
+  color: var(--text-800);
+  font-size: 16px;
+}
+
+.titulo-modulo {
+  font-size: 1.5em;
+  margin: 10px 0;
+  font-weight: bold;
+}
+
+.app-button {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  width: 100px;
+  height: 35px;
+  background-color: var(--primary-600);
+  border: none;
+  border-radius: 10px;
+  color: white;
+  transition: transform 0.2s ease-in-out;
+  transition: box-shadow 0.1s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.app-button:hover {
+  cursor: pointer;
+  background-color: var(--primary-700);
+  border: none;
+  border-radius: 10px;
+  transform: translate(0, -1px);
+  box-shadow: 0 2px 5px var(--primary-700);
+}
+
+.app-card {
+  background-color: var(--background-50);
+  padding: 25px;
+  border-radius: 20px;
+  box-shadow: 0 4px 10px var(--primary-200);
+}
+
+.app-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.app-form div {
+  display: flex;
+  flex-direction: column;
+}
+
+.app-form input,
+.app-form select {
+  padding: 10px;
+  border: 1px solid var(--secondary-200);
+  border-radius: 8px;
+  font-size: 16px;
+  background-color: var(--secondary-100);
+  color: var(--text-800);
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.app-form .precio-input {
+  position: relative;
+}
+
+.app-form .precio-input .signo-peso {
+  position: absolute;
+  width: 0.5em;
+  top: 50%;
+  left: 10px;
+  transform: translate(0, -50%);
+}
+
+.app-form .precio-input input {
+  padding-left: 20px;
+}
+
+.app-form .form-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.app-table {
+  #table-container {
+    margin-top: 50px;
+  }
+
+  table {
+    margin: 10px 0 0 0;
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  th,
+  td {
+    padding: 10px;
+    border: 1px solid var(--accent-500);
+  }
+
+  th {
+    background-color: var(--primary-600);
+    color: var(--background-50);
+  }
+
+  td {
+    background-color: var(--background-50);
+  }
+
+  td div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+  }
+}

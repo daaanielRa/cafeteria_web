@@ -1,59 +1,90 @@
-# CafeteriaWebb
+<img src="./app.png" alt="YCoffee-logo"/>
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.1.7.
+El proyecto consiste en un sistema de gestión para una cafetería, diseñado para facilitar la administración de pedidos, inventario y ventas. Este sistema proporciona una interfaz intuitiva tanto para los empleados que toman pedidos como para los administradores que supervisan el funcionamiento general de la cafetería.
+Además, garantiza la seguridad de los datos y la eficiencia en el manejo de los procesos internos.
 
-## Development server
+## Autores
 
-To start a local development server, run:
+<!-- Agrega aquí tu @username si has contribuido al proyecto -->
 
-```bash
-ng serve
+- [@Carlos Daniel Ramírez Álvarez](https://github.com/daaanielRA)
+- [@Zharick Jineth Portillo Criado](https://github.com/Zharickjp13)
+- [@Kristopher Alexis Verjel Rincón](https://github.com/KattoDev)
+
+## Características
+
+- **Gestión de Pedidos:**
+  - Los empleados podrán tomar pedidos de los clientes, seleccionando:
+    - los productos deseados
+    - la cantidad correspondiente.
+  - Se mostrará un resumen del pedido antes de confirmarlo, permitiendo realizar modificaciones si es necesario.
+- **Inventario de Productos:**
+  - El sistema mantendrá un registro actualizado del inventario de productos disponibles en la cafetería.
+  - Se actualizará automáticamente el inventario cada vez que se realice un pedido.
+- **Registro de Ventas:**
+  - Se registrará cada venta realizada en la cafetería, incluyendo:
+    - la fecha y hora de la venta
+    - los productos vendidos
+    - monto total
+    - método de pago utilizado.
+- **Gestión de Empleados:**
+  - Se mantendrá un registro de los empleados que trabajan en la cafetería, incluyendo información como:
+    - nombre
+    - cargo
+    - horario laboral
+    - salario.
+  - Los administradores podrán agregar, editar o eliminar empleados según sea necesario.
+- **Autenticación y Autorización:**
+  - Se implementa un sistema de autenticación para garantizar que solo los usuarios autorizados puedan acceder al sistema.
+  - Definición de diferentes roles de usuario, cada uno con sus propios privilegios de acceso y funcionalidades.:
+    - empleado
+    - administrador
+
+## Tecnologías utilizadas
+
+- **Frontend:** Vue 3 + Vite
+- **Estilos:** CSS
+- **Base de datos:** Firebase
+- **Autenticación:** Firebase Auth
+
+> [!NOTE]
+> El proyecto está alojado en una instancia de firebase y configurado con:
+
+```
+  |--> Firestore Database
+  |----> para almacenar los datos de:
+  |------> productos
+  |------> usuarios
+  |--> Authentication
+  |----> para manejar las credenciales e
+  |      inicios de sesión, teniendo como
+  |      proveedores de credenciales:
+  |------> Correo electrónico/contraseña
+  |--> Hosting
+  |----> para alojar la aplicación y mantenerla en tiempo real
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Capturas de pantalla
 
-## Code scaffolding
+### login
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+<img src="./app_screenshots/login.png" alt="pagina de login"/>
 
-```bash
-ng generate component component-name
-```
+### modulo de gestión de empleados
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+<img src="./app_screenshots/main.png" alt="pagina de login"/>
 
-```bash
-ng generate --help
-```
+## Recursos utilizados en el proyecto
 
-## Building
+- **Tipografías:**
+  - [Poppins](https://fonts.google.com/specimen/Poppins)
+- **Iconos**
+  - [Google Material Icons](https://fonts.google.com/icons)
 
-To build the project run:
+## Ejecución local
 
-```bash
-ng build
-```
+has click [aquí](EXEC.md) para ver las instrucciones detalladas de ejecucion
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+## Contribuciones
 
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+¡Las contribuciones al proyecto siempre serán bienvenidas!
