@@ -1,3 +1,4 @@
+import { ErrorBaseDatos, ErrorPermisos } from '@/utils/errores'
 import { initializeApp, type FirebaseApp } from 'firebase/app'
 import { createUserWithEmailAndPassword, deleteUser, getAuth, type Auth } from 'firebase/auth'
 import {
@@ -39,7 +40,7 @@ export class FirebaseService {
   }
 
   /**
-   * Metodo para borrar un documento cullo nombre está especificado en los parametros
+   * Metodo para borrar un documento cuyo nombre está especificado en los parametros
    * @param nombreColeccion el nombre de la colección donde está el documento
    * @param nombreDocumento el nombre dentro de los documentos a borrar
    */
@@ -50,13 +51,16 @@ export class FirebaseService {
     try {
       const col = collection(this.db, nombreColeccion)
       const q = query(col, where('nombre', '==', nombreDocumento))
-      const documento = await getDocs(q)
 
-      for (const docSnap of documento.docs) {
-        await deleteDoc(doc(this.db, nombreColeccion, docSnap.id))
-      }
+      const docs = await getDocs(q)
+
+      docs.docs.forEach(async (document) => {
+        const docRef = doc(this.db, nombreColeccion, document.id)
+
+        deleteDoc(docRef)
+      })
     } catch (error) {
-      throw new Error(error as string)
+      throw new ErrorBaseDatos(error as string)
     }
   }
 
@@ -82,15 +86,17 @@ export class FirebaseService {
               await deleteUser(user)
               console.log(`Usuario de Auth eliminado: ${docSnap.data().UID}`)
             } else {
-              console.warn(`No tienes permisos para eliminar al usuario: ${docSnap.data().UID}`)
+              throw new ErrorPermisos(
+                `No tienes permisos para eliminar al usuario: ${docSnap.data().UID}`,
+              )
             }
           } catch (authError) {
-            console.error(`Error al eliminar usuario de Auth: ${authError}`)
+            throw new ErrorBaseDatos(`Error al eliminar usuario de Auth: ${authError}`)
           }
         }
       }
     } catch (error) {
-      throw new Error(error as string)
+      throw new ErrorBaseDatos(error as string)
     }
   }
 
@@ -104,7 +110,7 @@ export class FirebaseService {
       const col = collection(this.db, nombreColeccion)
       await addDoc(col, datos)
     } catch (error) {
-      throw new Error(error as string)
+      throw new ErrorBaseDatos(error as string)
     }
   }
 
@@ -123,7 +129,7 @@ export class FirebaseService {
       const UID: string = await this._crearCredenciales(correo, contrasena)
       await setDoc(doc(this.db, 'usuarios', UID), datos)
     } catch (error) {
-      throw new Error(error as string)
+      throw new ErrorBaseDatos(error as string)
     }
   }
 
@@ -138,7 +144,7 @@ export class FirebaseService {
       const credenciales = await createUserWithEmailAndPassword(this.auth, correo, contrasena)
       return credenciales.user.uid
     } catch (error) {
-      throw new Error(error as string)
+      throw new ErrorBaseDatos(error as string)
     }
   }
 }

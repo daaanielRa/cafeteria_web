@@ -1,6 +1,7 @@
 import { FirebaseService } from '@/services/firebase/firebaseService'
 import { addDoc, collection, doc, getDoc, Timestamp, updateDoc } from 'firebase/firestore'
 import type { Producto } from '../types/productos'
+import { ErrorBaseDatos } from '../errores'
 
 /**
  * Metodo para actualizar la cantidad de un producto en la base de datos de **firestore**
@@ -15,7 +16,7 @@ async function _actualizarProducto(id: string, actualizacionCantidad: number) {
 
     updateDoc(prodRef, { cantidad: producto.cantidad - actualizacionCantidad })
   } catch (error) {
-    throw new Error('No se pudo actualizar la información del producto: ' + error)
+    throw new ErrorBaseDatos('No se pudo actualizar la información del producto: ' + error)
   }
 }
 
@@ -39,6 +40,6 @@ export async function registrarVenta(
       metodoPago: datos.metodoPago,
     })
   } catch (error) {
-    throw new Error('No se pudo registrar la venta: ' + error)
+    throw new ErrorBaseDatos('No se pudo registrar la venta: ' + error)
   }
 }

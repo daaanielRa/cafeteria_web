@@ -1,4 +1,5 @@
 import { FirebaseService } from '@/services/firebase/firebaseService'
+import { ErrorSesion } from '@/utils/errores'
 import { doc, getDoc } from 'firebase/firestore'
 import { defineStore } from 'pinia'
 
@@ -23,7 +24,7 @@ export const useUsuarioActualStore = defineStore('usuarioActual', {
         this.administrador = snapshot.data()?.tipo == 'administrador' ? true : false
         this.nombre = snapshot.data()?.nombre
       } catch (error) {
-        throw new Error(error as string)
+        throw new ErrorSesion(error as string)
       }
     },
 

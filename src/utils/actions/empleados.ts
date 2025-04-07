@@ -3,6 +3,8 @@ import { obtenerCelda } from '../controllers/tablas'
 import type { AnadirEmpleado } from '@/utils/types/formularios'
 import { Timestamp } from 'firebase/firestore'
 import { horaEntrada_Salida } from '@/utils/formateadores'
+import regex from '../regex'
+import { ErrorPermisos } from '../errores'
 
 /**
  * Metodo para eliminar un empleado de **firestore**
@@ -14,8 +16,10 @@ async function eliminar(evt: Event) {
   try {
     const celda = obtenerCelda(evt, '#nombre-empleado')
     const nombreEmpleado: string = celda.innerHTML
-    FirebaseService.eliminarUsuario('usuarios', nombreEmpleado)
-    console.warn('Esta funcion presenta fallas y se está trabajando en solucionarlo. ')
+
+    alert('Esta funcion presenta fallas y se está trabajando en solucionarlo.')
+    console.warn(`clickeado para modificar a ${nombreEmpleado}`)
+    // FirebaseService.eliminarUsuario('usuarios', nombreEmpleado)
     // alert('se ha eliminado este usuario')
     // celda.parentElement?.remove()
   } catch (error) {
@@ -33,7 +37,8 @@ async function eliminar(evt: Event) {
 async function modificar(evt: Event) {
   try {
     const nombreEmpleado: string = obtenerCelda(evt, '#nombre-empleado').innerHTML
-    console.warn(`Función no implementada aún, clickeado para modificar a ${nombreEmpleado}`)
+    alert('Lo sentimos, la funcion no ha sido implementada aún.')
+    console.warn(`clickeado para modificar a ${nombreEmpleado}`)
   } catch (error) {
     alert('Error al modificar el empleado')
     console.error(error)
@@ -47,6 +52,8 @@ async function modificar(evt: Event) {
  */
 async function anadir(datos: AnadirEmpleado): Promise<void> {
   try {
+    if (!regex.correo.test(datos.correo)) throw new ErrorPermisos('El email no es valido')
+
     const formateo = horaEntrada_Salida(datos.horario.entrada, datos.horario.salida)
     const entrada: Date = formateo.horarioEntrada
     const salida: Date = formateo.horarioSalida

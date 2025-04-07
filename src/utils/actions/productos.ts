@@ -5,16 +5,15 @@ import { FirebaseService } from '@/services/firebase/firebaseService'
 /**
  * Metodo para eliminar un producto desde **firestore**
  *
- * @todo revisar implementacion, ya que impide borrar el producto
  * @param evt el evento del click
  */
 async function eliminar(evt: Event): Promise<void> {
   try {
-    const nombreProducto: string = obtenerCelda(evt, '#nombre-producto').innerHTML
-    // await FirebaseService.eliminarDocumento('productos', nombreProducto)
-    console.warn(
-      `Esta funcion presenta fallas y se está trabajando en solucionarlo.\nSe ha clickeado para eliminar: ${nombreProducto}`,
-    )
+    const celda: HTMLElement = obtenerCelda(evt, '#nombre-producto')
+    const nombreProducto: string = celda.innerHTML
+    await FirebaseService.eliminarDocumento('productos', nombreProducto)
+    alert('Se ha eliminado el producto')
+    celda.parentElement?.remove()
   } catch (error) {
     alert('Error al eliminar el producto')
     console.error(error)
@@ -30,7 +29,8 @@ async function eliminar(evt: Event): Promise<void> {
 async function modificar(evt: Event): Promise<void> {
   try {
     const nombreProducto: string = obtenerCelda(evt, '#nombre-producto').innerHTML
-    console.warn(`Función no implementada aún.\nse ha clickeado para modificar: ${nombreProducto}`)
+    alert('Lo sentimos, la funcion no ha sido implementada aún.')
+    console.warn(`se ha clickeado para modificar: ${nombreProducto}`)
   } catch (error) {
     alert('Error al modificar el producto')
     console.error(error)
@@ -43,7 +43,12 @@ async function modificar(evt: Event): Promise<void> {
 async function anadir(producto: Producto): Promise<void> {
   try {
     await FirebaseService.crearDocumento('productos', producto)
+
     alert('producto añadido')
+
+    producto.nombre = ''
+    producto.cantidad = 1
+    producto.precio = ''
   } catch (error) {
     alert('error al añadir el producto')
     console.error(error)

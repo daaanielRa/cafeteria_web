@@ -44,7 +44,6 @@ const router = createRouter({
   ],
 })
 
-// ? esta funcion hace que el titulo del documento cambie dinamicamente
 router.afterEach((to) => {
   document.title = (to.meta.title as string) + ' - YCoffee'
 })
