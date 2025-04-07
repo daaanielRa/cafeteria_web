@@ -1,47 +1,29 @@
 <script setup lang="ts">
-import { FirebaseService } from '@/services/firebaseService'
-import { obtenerCelda } from '@/utils/handlers/tablas'
+import { FirebaseService } from '@/services/firebase/firebaseService'
 import type { Producto } from '@/utils/types/productos'
 import { collection, getDocs } from 'firebase/firestore'
 import { onMounted, ref, type Ref } from 'vue'
-
-const productos: Ref<Producto[]> = ref([])
+import productos from '@/utils/actions/productos'
 
 onMounted(async () => {
   const col = collection(FirebaseService.db, 'productos')
 
   const snapshot = await getDocs(col)
 
-  productos.value = snapshot.docs.map((producto) => ({
+  productosDisponibles.value = snapshot.docs.map((producto) => ({
     nombre: producto.data().nombre,
     cantidad: producto.data().cantidad,
     precio: producto.data().precio,
   }))
+
+  productosDisponibles.value.sort((a, b) => a.nombre.localeCompare(b.nombre))
 })
 
-async function eliminarProducto(evt: Event) {
-  try {
-    const nombreProducto: string = obtenerCelda(evt, '#nombre-producto').innerHTML
-    await FirebaseService.eliminarDocumento('productos', nombreProducto)
-  } catch (error) {
-    alert('Error al eliminar el producto')
-    console.error(error)
-  }
-}
-
-async function modificarProducto(evt: Event) {
-  try {
-    const nombreProducto: string = obtenerCelda(evt, '#nombre-producto').innerHTML
-    alert('se va a editar' + nombreProducto)
-  } catch (error) {
-    alert('Error al modificar el producto')
-    console.error(error)
-  }
-}
+const productosDisponibles: Ref<Producto[]> = ref([])
 </script>
 
 <template>
-  <div class="app-table" v-if="productos.length > 0">
+  <div class="app-table" v-if="productosDisponibles.length > 0">
     <table border="1">
       <thead>
         <tr>
@@ -52,14 +34,19 @@ async function modificarProducto(evt: Event) {
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(producto, index) in productos" :key="index">
+        <tr v-for="(producto, index) in productosDisponibles" :key="index">
           <td id="nombre-producto">{{ producto.nombre }}</td>
           <td>{{ producto.cantidad }}</td>
           <td>{{ producto.precio }}</td>
           <td>
             <div>
-              <button @click="modificarProducto" class="app-button">actualizar</button>
-              <button @click="eliminarProducto" class="app-button">eliminar</button>
+              <button @click="productos.modificar" class="app-button">
+                <span class="material-symbols-outlined"> edit_square </span> actualizar
+              </button>
+              <button @click="productos.eliminar" class="app-button">
+                <span class="material-symbols-outlined"> delete </span>
+                eliminar
+              </button>
             </div>
           </td>
         </tr>
@@ -68,5 +55,3 @@ async function modificarProducto(evt: Event) {
   </div>
   <p v-else>Cargando productos...</p>
 </template>
-
-<style scoped lang="css"></style>

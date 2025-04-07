@@ -1,14 +1,19 @@
-import { FirebaseService } from '@/services/firebaseService'
+import { FirebaseService } from '@/services/firebase/firebaseService'
 import { doc, getDoc } from 'firebase/firestore'
 import { defineStore } from 'pinia'
 
 export const useUsuarioActualStore = defineStore('usuarioActual', {
   state: () => ({
     administrador: false,
+    nombre: '',
     usuario: '',
   }),
   actions: {
-    async settearUsuario(usuario: string) {
+    /**
+     * Metodo para guardar la sesión actual dentro de la aplicación
+     * @param usuario el usuario a guardar
+     */
+    async settearUsuario(usuario: string): Promise<void> {
       try {
         this.usuario = usuario
 
@@ -16,12 +21,16 @@ export const useUsuarioActualStore = defineStore('usuarioActual', {
         const snapshot = await getDoc(usuarioRef)
 
         this.administrador = snapshot.data()?.tipo == 'administrador' ? true : false
+        this.nombre = snapshot.data()?.nombre
       } catch (error) {
-        alert('Ocurrió un error al iniciar sesión' + error)
+        throw new Error(error as string)
       }
     },
 
-    cerrarSesion() {
+    /**
+     * Metodo para eliminar los datos de la sesión actual
+     */
+    cerrarSesion(): void {
       this.$reset()
     },
   },

@@ -1,30 +1,11 @@
 <script setup lang="ts">
-import router from '@/router'
-import { FirebaseService } from '@/services/firebaseService'
-import { useUsuarioActualStore } from '@/stores/UsuarioActual'
-import { signInWithEmailAndPassword } from 'firebase/auth'
 import { ref } from 'vue'
+import sesion from '@/utils/controllers/sesion'
 
 const formulario = ref({
   email: '',
   password: '',
 })
-
-async function iniciarSesion() {
-  try {
-    const inicioSesion = await signInWithEmailAndPassword(
-      FirebaseService.auth,
-      formulario.value.email,
-      formulario.value.password,
-    )
-
-    await useUsuarioActualStore().settearUsuario(inicioSesion.user.uid)
-
-    router.push('/pedidos')
-  } catch (error) {
-    alert(error)
-  }
-}
 </script>
 
 <template>
@@ -32,11 +13,15 @@ async function iniciarSesion() {
     <div class="app-card">
       <div class="bienvenida">
         <img src="/logo.png" alt="logo" width="30%" />
-        <p class="titulo-modulo">Cafeteria Ycoffee</p>
+        <p class="titulo-modulo font-pacifico">Cafetería Ycoffee</p>
         <p>¡Bienvenido! :D</p>
       </div>
 
-      <form class="app-form" id="loginForm" @submit.prevent="iniciarSesion">
+      <form
+        class="app-form"
+        id="loginForm"
+        @submit.prevent="sesion.iniciar(formulario.email, formulario.password)"
+      >
         <div class="input-group">
           <label for="email">Correo Electrónico</label>
           <input type="email" id="email" v-model="formulario.email" required />
@@ -53,7 +38,9 @@ async function iniciarSesion() {
           />
         </div>
         <div class="form-buttons">
-          <button type="submit" class="app-button">Iniciar sesión</button>
+          <button type="submit" class="app-button">
+            <span class="material-symbols-outlined"> login </span> Iniciar sesión
+          </button>
         </div>
       </form>
     </div>
@@ -64,6 +51,7 @@ async function iniciarSesion() {
 .titulo-modulo {
   font-size: 2em;
   color: var(--primary-600);
+  font-weight: 500;
 }
 
 .bienvenida {

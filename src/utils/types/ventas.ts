@@ -6,3 +6,9 @@ export interface Venta {
   cantidad: number
   metodoPago: string
 }
+
+export interface Pedido {
+  producto: string
+  cantidad: number
+  metodoPago: string
+}

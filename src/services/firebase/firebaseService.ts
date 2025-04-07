@@ -60,6 +60,9 @@ export class FirebaseService {
     }
   }
 
+  /**
+   * TODO reparar esta funcion
+   */
   public static async eliminarUsuario(
     nombreColeccion: string,
     nombreDocumento: string,

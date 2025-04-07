@@ -1,13 +1,14 @@
-import { FirebaseService } from '@/services/firebaseService'
+import { FirebaseService } from '@/services/firebase/firebaseService'
 import { addDoc, collection, doc, getDoc, Timestamp, updateDoc } from 'firebase/firestore'
 import type { Producto } from '../types/productos'
 
 /**
  * Metodo para actualizar la cantidad de un producto en la base de datos de **firestore**
+ *
  * @param id el id del producto a actualizar
  * @param actualizacionCantidad la cantidad del producto a actualizar
  */
-async function actualizarProducto(id: string, actualizacionCantidad: number) {
+async function _actualizarProducto(id: string, actualizacionCantidad: number) {
   try {
     const prodRef = doc(FirebaseService.db, 'productos', id)
     const producto: Producto = (await getDoc(prodRef)).data() as Producto
@@ -20,6 +21,7 @@ async function actualizarProducto(id: string, actualizacionCantidad: number) {
 
 /**
  * Metodo para registrar la venta de un producto, realizando la actualización del producto en **firestore**
+ *
  * @param datos los datos de la venta a registrar
  * @param idProducto el id del producto que se vendió
  */
@@ -28,7 +30,7 @@ export async function registrarVenta(
   idProducto: string,
 ) {
   try {
-    actualizarProducto(idProducto, datos.cantidad)
+    _actualizarProducto(idProducto, datos.cantidad)
 
     await addDoc(collection(FirebaseService.db, 'ventas'), {
       fecha: Timestamp.fromDate(new Date()),

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import PageBase from '@/components/layout/pageBase.vue'
 import TablaProductos from '@/components/tables/tablaProductos.vue'
-import { FirebaseService } from '@/services/firebaseService'
+import productos from '@/utils/actions/productos'
 import type { Producto } from '@/utils/types/productos'
 import { ref, type Ref } from 'vue'
 
@@ -10,16 +10,6 @@ const formProducto: Ref<Producto> = ref({
   cantidad: 1,
   precio: '',
 })
-
-async function anadirProducto() {
-  try {
-    await FirebaseService.crearDocumento('productos', formProducto.value)
-    alert('producto añadido')
-  } catch (error) {
-    alert('error al añadir')
-    console.error(error)
-  }
-}
 </script>
 
 <template>
@@ -28,7 +18,7 @@ async function anadirProducto() {
       <section class="invcontainer">
         <div class="app-card">
           <p class="titulo-modulo">Gestión de Productos</p>
-          <form class="app-form" @submit.prevent="anadirProducto">
+          <form class="app-form" @submit.prevent="productos.anadir(formProducto)">
             <div>
               <label for="producto">Producto:</label>
               <input
@@ -61,6 +51,7 @@ async function anadirProducto() {
             </div>
             <div class="form-buttons">
               <button class="app-button" type="submit" name="accion" value="agregar">
+                <span class="material-symbols-outlined"> add_diamond </span>
                 Agregar producto
               </button>
             </div>
@@ -79,6 +70,6 @@ async function anadirProducto() {
 }
 
 .form-buttons button {
-  width: 150px;
+  width: 180px;
 }
 </style>

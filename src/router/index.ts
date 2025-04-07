@@ -1,11 +1,11 @@
-import { useUsuarioActualStore } from '@/stores/UsuarioActual'
-import EmpleadosView from '@/views/empleadosView.vue'
-import HistoriaventasView from '@/views/historiaventasView.vue'
-import InventarioView from '@/views/inventarioView.vue'
+import { useUsuarioActualStore } from '@/stores/usuario/UsuarioActual'
+import HistoriaventasView from '@/views/dashboard/historiaventasView.vue'
+import InventarioView from '@/views/dashboard/inventarioView.vue'
 import LoginView from '@/views/loginView.vue'
 import NotFoundView from '@/views/notFoundView.vue'
-import PedidosView from '@/views/pedidosView.vue'
+import PedidosView from '@/views/dashboard/pedidosView.vue'
 import { createRouter, createWebHistory } from 'vue-router'
+import EmpleadosView from '@/views/dashboard/empleadosView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),

@@ -1,39 +1,14 @@
 <script setup lang="ts">
-import { FirebaseService } from '@/services/firebaseService'
-import { obtenerCelda } from '@/utils/handlers/tablas'
+import { FirebaseService } from '@/services/firebase/firebaseService'
+import empleados from '@/utils/actions/empleados'
 import type { Empleado } from '@/utils/types/empleados'
 import { collection, getDocs } from 'firebase/firestore'
 import { onMounted, ref, type Ref } from 'vue'
 
-const empleados: Ref<Empleado[]> = ref([])
-
-async function eliminarEmpleado(evt: Event) {
-  try {
-    const celda = obtenerCelda(evt, '#nombre-empleado')
-    const nombreEmpleado: string = celda.innerHTML
-    FirebaseService.eliminarUsuario('usuarios', nombreEmpleado)
-    alert('se ha eliminado este usuario')
-    celda.parentElement?.remove()
-  } catch (error) {
-    alert(error)
-    console.log(error)
-  }
-}
-
-async function modificar(evt: Event) {
-  try {
-    const nombreEmpleado: string = obtenerCelda(evt, '#nombre-empleado').innerHTML
-    alert('se está modificando ' + nombreEmpleado)
-  } catch (error) {
-    alert('Error al modificar el empleado')
-    console.error(error)
-  }
-}
-
 onMounted(async () => {
   const col = collection(FirebaseService.db, 'usuarios')
 
-  empleados.value = (await getDocs(col)).docs.map((usuario) => ({
+  empleadosRegistrados.value = (await getDocs(col)).docs.map((usuario) => ({
     nombre: usuario.data().nombre,
     correo: usuario.data().correo,
     cargo: usuario.data().cargo,
@@ -43,12 +18,16 @@ onMounted(async () => {
     },
     tipo: usuario.data().tipo,
   }))
+
+  empleadosRegistrados.value.sort((a, b) => a.nombre.localeCompare(b.nombre))
 })
+
+const empleadosRegistrados: Ref<Empleado[]> = ref([])
 </script>
 
 <template>
   <div class="app-table">
-    <table border="1" v-if="empleados.length > 0">
+    <table border="1" v-if="empleadosRegistrados.length > 0">
       <thead>
         <tr>
           <th>Nombre del empleado</th>
@@ -61,7 +40,7 @@ onMounted(async () => {
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(empleado, index) in empleados" :key="index">
+        <tr v-for="(empleado, index) in empleadosRegistrados" :key="index">
           <td id="nombre-empleado">{{ empleado.nombre }}</td>
           <td>{{ empleado.correo }}</td>
           <td>{{ empleado.cargo }}</td>
@@ -70,13 +49,23 @@ onMounted(async () => {
           <td>{{ empleado.tipo }}</td>
           <td>
             <div>
-              <button @click="modificar" class="app-button">actualizar</button>
-              <button @click="eliminarEmpleado" class="app-button">eliminar</button>
+              <button @click="empleados.modificar" class="app-button">
+                <span class="material-symbols-outlined"> edit_square </span>
+                actualizar
+              </button>
+              <button @click="empleados.eliminar" class="app-button">
+                <span class="material-symbols-outlined"> delete </span>
+                eliminar
+              </button>
             </div>
           </td>
         </tr>
       </tbody>
     </table>
-    <p v-else>Cargando datos...</p>
+    <img
+      v-else
+      src="https://media.tenor.com/qMWisxsVAcoAAAAM/cat-funny-stupid-loading-reloading-frozen.gif"
+      alt="😺"
+    />
   </div>
 </template>

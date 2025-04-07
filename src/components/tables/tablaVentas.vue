@@ -1,10 +1,8 @@
 <script setup lang="ts">
-import { FirebaseService } from '@/services/firebaseService'
+import { FirebaseService } from '@/services/firebase/firebaseService'
 import type { Venta } from '@/utils/types/ventas'
 import { collection, getDocs } from 'firebase/firestore'
 import { onMounted, ref, type Ref } from 'vue'
-
-const ventas: Ref<Venta[]> = ref([])
 
 onMounted(async () => {
   const col = collection(FirebaseService.db, 'ventas')
@@ -18,8 +16,10 @@ onMounted(async () => {
     metodoPago: venta.data().metodoPago,
   }))
 
-  console.log(ventas.value)
+  ventas.value.sort((a, b) => b.fecha.toDate().getTime() - a.fecha.toDate().getTime())
 })
+
+const ventas: Ref<Venta[]> = ref([])
 </script>
 
 <template>

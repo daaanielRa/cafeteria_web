@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import PageBase from '@/components/layout/pageBase.vue'
 import TablaEmpleados from '@/components/tables/tablaEmpleados.vue'
-import { FirebaseService } from '@/services/firebaseService'
+import empleados from '@/utils/actions/empleados'
 import type { AnadirEmpleado } from '@/utils/types/formularios'
-import { Timestamp } from 'firebase/firestore'
 import { ref, type Ref } from 'vue'
 
 const formEmpleado: Ref<AnadirEmpleado> = ref({
@@ -14,56 +13,6 @@ const formEmpleado: Ref<AnadirEmpleado> = ref({
   clave: '',
   tipoUsuario: '',
 })
-
-async function anadirEmpleado() {
-  try {
-    const formulario = formEmpleado.value
-    const [horasEntrada, minutosEntrada] = formulario.horario.entrada.split(':').map(Number)
-    const [horasSalida, minutosSalida] = formulario.horario.salida.split(':').map(Number)
-    const fecha: Date = new Date()
-    const horarioEntrada: Date = new Date(
-      fecha.getFullYear(),
-      fecha.getMonth(),
-      fecha.getDay(),
-      horasEntrada,
-      minutosEntrada,
-    )
-    const horarioSalida: Date = new Date(
-      fecha.getFullYear(),
-      fecha.getMonth(),
-      fecha.getDay(),
-      horasSalida,
-      minutosSalida,
-    )
-
-    await FirebaseService.crearUsuario(
-      {
-        nombre: formulario.nombre,
-        correo: formulario.correo,
-        cargo: formulario.cargo,
-        horario: {
-          entrada: Timestamp.fromDate(horarioEntrada),
-          salida: Timestamp.fromDate(horarioSalida),
-        },
-        tipo: formulario.tipoUsuario.toLowerCase(),
-      },
-      formEmpleado.value.correo,
-      formEmpleado.value.clave,
-    )
-    alert('empleado añadido')
-
-    formulario.nombre = ''
-    formulario.correo = ''
-    formulario.cargo = ''
-    formulario.horario.entrada = ''
-    formulario.horario.salida = ''
-    formulario.clave = ''
-    formulario.tipoUsuario = ''
-  } catch (error) {
-    alert('error al añadir' + error)
-    console.error(error)
-  }
-}
 </script>
 
 <template>
@@ -71,7 +20,7 @@ async function anadirEmpleado() {
     <template #main>
       <div class="app-card">
         <p class="titulo-modulo">Gestión de Empleados</p>
-        <form class="app-form" @submit.prevent="anadirEmpleado">
+        <form class="app-form" @submit.prevent="empleados.anadir(formEmpleado)">
           <div>
             <label for="Nombre">Nombre:</label>
             <input
@@ -141,6 +90,7 @@ async function anadirEmpleado() {
           </select>
           <div class="form-buttons">
             <button type="submit" name="accion" value="agregar" class="app-button">
+              <span class="material-symbols-outlined"> person_add </span>
               Agregar empleado
             </button>
           </div>

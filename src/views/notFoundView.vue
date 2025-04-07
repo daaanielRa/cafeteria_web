@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import router from '@/router'
+import { redireccionar } from '@/utils/controllers/navegacion'
 </script>
 
 <template>
@@ -7,7 +7,7 @@ import router from '@/router'
     <div class="message">
       <p class="error">404</p>
       <p>No encontramos lo que buscabas :c</p>
-      <a @click="router.push('/')">regresar al principio </a>
+      <a @click="redireccionar('/')">regresar al principio </a>
     </div>
     <img src="/coffee.png" alt="taza de café" />
   </div>
